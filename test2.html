@@ -21,7 +21,27 @@
 
 			//create blocks
 			var geometry = new THREE.BoxGeometry( 1.6667, 1, 5 ); //original dimensions of Jenga pieces is 1.5 x 2.5 x 7.5
-			var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+			var blockMaterial = [
+				new THREE.MeshBasicMaterial( {
+					map: new THREE.TextureLoader().load('http://localhost/image/maple.jpg'), side:THREE.FrontSide
+				})	, //right
+				new THREE.MeshBasicMaterial( {
+					map: new THREE.TextureLoader().load("http://localhost/image/maple.jpg"), side:THREE.FrontSide
+				}), //left
+				new THREE.MeshBasicMaterial( {
+					map: new THREE.TextureLoader().load("http://localhost/image/maple.jpg"), side:THREE.FrontSide
+				}), //top
+				new THREE.MeshBasicMaterial( {
+					map: new THREE.TextureLoader().load("http://localhost/image/maple.jpg"), side:THREE.FrontSide
+				}),//bottom
+				new THREE.MeshBasicMaterial( {
+					map: new THREE.TextureLoader().load("http://localhost/image/maple.jpg"), side:THREE.FrontSide
+				}), //front
+				new THREE.MeshBasicMaterial( {
+					map: new THREE.TextureLoader().load("http://localhost/image/maple.jpg"), side:THREE.FrontSide
+				}) //back
+			];
+			
 			var material2 = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
 			
 			//create 18x3 array for blocks			
@@ -33,9 +53,9 @@
 				if(i%2 == 0)
 				{
 					temp = [
-					new THREE.Mesh(geometry,material),
-					new THREE.Mesh(geometry,material),
-					new THREE.Mesh(geometry,material)
+					new THREE.Mesh(geometry,blockMaterial),
+					new THREE.Mesh(geometry,blockMaterial),
+					new THREE.Mesh(geometry,blockMaterial)
 					];
 					
 					//set position
