@@ -1,0 +1,99 @@
+<html>
+	<head>
+		<title>My first three.js app</title>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="js/three.js"></script>
+		<script>
+		
+			//set up scene and camera
+			var scene = new THREE.Scene();
+			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+			
+			//set up renderer
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+
+			//create blocks
+			var geometry = new THREE.BoxGeometry( 1, 1.6667, 5 ); //original dimensions of Jenga pieces is 1.5 x 2.5 x 7.5
+			var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+			var block = new THREE.Mesh(geometry, material);
+			var block2 = new THREE.Mesh(geometry, material);
+			
+			//define first set of blocks
+			var blockset1 = [
+				new THREE.Mesh(geometry,material),
+				new THREE.Mesh(geometry,material),
+				new THREE.Mesh(geometry,material)
+			];
+			//set positions
+			blockset1[0].position.set(-1,0,0);
+			blockset1[1].position.set(0,0,0);
+			blockset1[2].position.set(1,0,0);
+			
+			//define second set of blocks
+			var blockset2= [
+				new THREE.Mesh(geometry,material),
+				new THREE.Mesh(geometry,material),
+				new THREE.Mesh(geometry,material)
+			];
+			//set positions
+			blockset2[0].position.set(-1,0,0);
+			blockset2[1].position.set(0,0,0);
+			blockset2[2].position.set(1,0,0);
+
+			//set rotations
+			for(var i=0;i<3;i++)
+			{
+				blockset2[i].rotation.y += Math.PI/2;
+				blockset2[i].position.y += 1;
+			}
+
+			/*
+			//set up tower
+			for(var i=0; i<9; i++)
+			{
+				//set holders
+				temp1 = blockset1;
+				temp2 = blockset2;
+				
+				//increase y elevation for next iteration
+				for(var j=0;j<3;j++)
+				{
+					temp1[j].position.y += 2*i;
+					temp2[j].position.y += 2*i;
+				}
+				
+				//add blocks
+				for(var j=0;j<3;j++)
+				{
+					scene.add(temp1[j]);
+					scene.add(temp2[j]);
+				}
+			}
+			*/
+			camera.position.z = 10;
+			camera.position.y = 3;
+			camera.position.x = -2;
+			renderer.render(scene, camera);
+			var animate = function () {
+				requestAnimationFrame( animate );
+
+				block.rotation.x += 0.1;
+				block.rotation.y += 0.1;
+
+				renderer.render(scene, camera);
+			};
+			
+
+			
+			//animate();
+			
+		</script>
+	</body>
+</html>
