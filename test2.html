@@ -1,0 +1,88 @@
+<html>
+	<head>
+		<title>My first three.js app</title>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="js/three.js"></script>
+		<script>
+		
+			//set up scene and camera
+			var scene = new THREE.Scene();
+			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+			
+			//set up renderer
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+
+			//create blocks
+			var geometry = new THREE.BoxGeometry( 1.6667, 1, 5 ); //original dimensions of Jenga pieces is 1.5 x 2.5 x 7.5
+			var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+			var material2 = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
+			
+			//create 18x3 array for blocks			
+			blocks = [];
+			
+			height = 0;
+			for(var i=0; i<18; i++)
+			{
+				if(i%2 == 0)
+				{
+					temp = [
+					new THREE.Mesh(geometry,material),
+					new THREE.Mesh(geometry,material),
+					new THREE.Mesh(geometry,material)
+					];
+					
+					//set position
+					temp[0].position.set(0,height,-1.6667);
+					temp[1].position.set(0,height,0);
+					temp[2].position.set(0,height,1.6667);
+
+					//set rotation
+					for(var j=0;j<3;j++)
+						temp[j].rotation.y += Math.PI/2;
+
+				}
+				else
+				{
+					temp = [
+					new THREE.Mesh(geometry,material2),
+					new THREE.Mesh(geometry,material2),
+					new THREE.Mesh(geometry,material2)
+					];
+					
+					//set position
+					temp[0].position.set(-1.6667,height,0);
+					temp[1].position.set(0,height,0);
+					temp[2].position.set(1.6667,height,0);
+				}
+	
+				height++;
+				blocks.push(temp);
+			}
+			
+			//add tower to scene
+			
+			
+			for(var i=0; i<18; i++)
+			{				
+				for(var j=0; j<3; j++)
+				{
+					scene.add(blocks[i][j]);
+				}
+			}
+			
+			camera.position.z = 20;
+			camera.position.y = 10;
+			camera.position.x = -5;
+			renderer.render(scene, camera);
+
+			
+		</script>
+	</body>
+</html>
